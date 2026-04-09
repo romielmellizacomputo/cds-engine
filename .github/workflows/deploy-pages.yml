@@ -14,17 +14,18 @@ jobs:
         with:
           repository: romielmellizacomputo/centralized-docs-system
           token: ${{ secrets.PAT_TOKEN }}
-          path: source  # checks out private repo into /source folder
+          path: source
 
-      - name: Checkout cds-engine (target)
+      - name: Checkout cds-engine
         uses: actions/checkout@v4
         with:
-          path: target  # checks out cds-engine into /target folder
+          path: target
 
-      - name: Copy web files from private repo to cds-engine
+      - name: Copy web files from private repo
         run: |
-          cp -r source/src/* target/  
-          # adjust path depending on where your html/js lives in centralized-docs-system
+          cp source/src/index.html target/index.html
+          cp source/src/app.js target/app.js
+          cp source/src/style.css target/style.css
 
       - name: Commit and push to cds-engine
         run: |
@@ -32,5 +33,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add .
-          git commit -m "Deploy latest from centralized-docs-system" || echo "No changes"
+          git commit -m "Deploy latest from centralized-docs-system" || echo "No changes to commit"
           git push
