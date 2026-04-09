@@ -1,0 +1,37 @@
+name: TC Automation Engine
+on:
+  workflow_dispatch:
+    inputs:
+      sheet_data:
+        description: 'Data from the edited sheet'
+        required: true
+        type: string
+jobs:
+  Automation-Engine:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout Private Repo (centralized-docs-system)
+        uses: actions/checkout@v4
+        with:
+          repository: romielmellizacomputo/centralized-docs-system
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install google-auth google-auth-httplib2 google-api-python-client pytz
+      - name: Run scripts
+        run: |
+          echo "Sheet Data: ${{ github.event.inputs.sheet_data }}"
+          python automated-test-case/update_request.py
+          python automated-test-case/update_toc.py
+          python automated-test-case/auto_dropdown.py
+          python automated-test-case/auto_number.py
+          python automated-test-case/auto_formatting.py
+        env:
+          SHEET_DATA: ${{ github.event.inputs.sheet_data }}
+          AUTOMATED_PORTALS: ${{ secrets.AUTOMATED_PORTALS }}
+          TEST_CASE_SERVICE_ACCOUNT_JSON: ${{ secrets.TEST_CASE_SERVICE_ACCOUNT_JSON }}
