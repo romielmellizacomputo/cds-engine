@@ -12,13 +12,12 @@ jobs:
         with:
           repository: romielmellizacomputo/centralized-docs-system
           token: ${{ secrets.PAT_TOKEN }}
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: Verify folder contents (for debugging)
         run: |
           ls -la automated-portals
