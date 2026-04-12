@@ -6,20 +6,16 @@ on:
 jobs:
   run-github:
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: true  # Allow this job to fail without failing the entire workflow
     env:
       PROJECT_CONFIG: ${{ secrets.PROJECT_CONFIG }}  # ✅ Add this at job level to ensure access
     steps:
-      - name: Checkout Private Repo (centralized-docs-system)
-        uses: actions/checkout@v4
-        with:
-          repository: romielmellizacomputo/centralized-docs-system
-          token: ${{ secrets.PAT_TOKEN }}
-
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '20'  # ✅ upgraded from 14
       - name: Install dependencies
         run: |
           cd SheetSync
@@ -29,6 +25,22 @@ jobs:
           echo "Fetching IP address..."
           IP_ADDRESS=$(curl -s ifconfig.me)
           echo "Runner IP Address: $IP_ADDRESS"
+      - name: Ensure package.json has type module
+        run: |
+          cd SheetSync
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const pkgPath = path.join(process.cwd(), '../package.json');
+            const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+            if (pkg.type !== 'module') {
+              pkg.type = 'module';
+              fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+              console.log('✅ Added type: module to package.json');
+            } else {
+              console.log('ℹ️ package.json already has type: module');
+            }
+          "
       - name: Run fetchallissues.js
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
