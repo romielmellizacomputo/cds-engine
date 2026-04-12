@@ -10,10 +10,13 @@ jobs:
     env:
       PROJECT_CONFIG: ${{ secrets.PROJECT_CONFIG }}  # ✅ Add this at job level to ensure access
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout Private Repo (centralized-docs-system)
+        uses: actions/checkout@v4
+        with:
+          repository: romielmellizacomputo/centralized-docs-system
+          token: ${{ secrets.PAT_TOKEN }}
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '20'  # ✅ upgraded from 14
       - name: Install dependencies
@@ -27,11 +30,9 @@ jobs:
           echo "Runner IP Address: $IP_ADDRESS"
       - name: Ensure package.json has type module
         run: |
-          cd SheetSync
           node -e "
             const fs = require('fs');
-            const path = require('path');
-            const pkgPath = path.join(process.cwd(), '../package.json');
+            const pkgPath = 'package.json';
             const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
             if (pkg.type !== 'module') {
               pkg.type = 'module';
