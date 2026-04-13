@@ -18,7 +18,6 @@ jobs:
         with:
           repository: romielmellizacomputo/centralized-docs-system
           token: ${{ secrets.PAT_TOKEN }}
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -35,6 +34,7 @@ jobs:
           TEAM_CDS_SERVICE_ACCOUNT_JSON: ${{ secrets.TEAM_CDS_SERVICE_ACCOUNT_JSON }}
           SHEET_SYNC_SID: ${{ secrets.SHEET_SYNC_SID }}
           CBS_SID: ${{ secrets.CBS_SID }}
+          LEADS_CDS_SID: ${{ secrets.LEADS_CDS_SID }}  # ← Add this
           SHEET_DATA: ${{ github.event.inputs.sheet_data }}
       - name: Run fetch-mrs.py
         run: python cbs-runner/fetch-mrs.py
