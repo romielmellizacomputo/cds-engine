@@ -1,7 +1,9 @@
 name: Fetch Additional Issue Info
 on:
   schedule:
-  - cron: '0 17 * * *'  # Runs every day at 1 AM Philippine Time (17:00 UTC)
+    - cron: '0 16 * * *'  # 12:00 midnight Philippine Time (PHT)
+    - cron: '0 4 * * *'   # 12:00 noon Philippine Time (PHT)
+    - cron: '0 10 * * *'  # 6:00 PM Philippine Time (PHT)
   workflow_dispatch:
 jobs:
   sync:
