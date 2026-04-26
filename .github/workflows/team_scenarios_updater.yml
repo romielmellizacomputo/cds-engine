@@ -33,3 +33,4 @@ jobs:
           TEAM_CDS_SERVICE_ACCOUNT_JSON: ${{ secrets.TEAM_CDS_SERVICE_ACCOUNT_JSON }}
           TSP_ML_SID: ${{ secrets.TSP_ML_SID }}
           TCP_ML_SID: ${{ secrets.TCP_ML_SID }}
+          SHEET_SYNC_SID: ${{ secrets.SHEET_SYNC_SID }}
