@@ -1,10 +1,8 @@
-name: TSP Additional Info Fetcher
-
+name: Additional Scenario Info Fetcher
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 */3 * * *'
-
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -15,19 +13,16 @@ jobs:
         with:
           repository: romielmellizacomputo/centralized-docs-system
           token: ${{ secrets.PAT_TOKEN }}
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-
       - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install google-api-python-client
           pip install pytz
           pip install requests
-
       - name: Run tsp_additional_info.py
         run: python TCP_AND_TSP/tsp_additional_info.py
         env:
