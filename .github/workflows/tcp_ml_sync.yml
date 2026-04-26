@@ -34,5 +34,5 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
           TEAM_CDS_SERVICE_ACCOUNT_JSON: ${{ secrets.TEAM_CDS_SERVICE_ACCOUNT_JSON }}
           TCP_ML_SID: ${{ secrets.TCP_ML_SID }}
-          TSP_ML_SID: ${{ secrets.TSP_ML_SID }}   # ← add this
+          TSP_ML_SID: ${{ secrets.TSP_ML_SID }}
           SHEET_DATA: ${{ github.event.inputs.sheet_data }}
