@@ -1,0 +1,38 @@
+name: Additional Scenario Info Fetcher
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */3 * * *'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout Private Repo (centralized-docs-system)
+        uses: actions/checkout@v4
+        with:
+          repository: romielmellizacomputo/centralized-docs-system
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install google-api-python-client
+          pip install pytz
+          pip install requests
+
+      - name: Run tsp_additional_info.py
+        run: python TCP_AND_TSP/tsp_additional_info.py
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          TEAM_CDS_SERVICE_ACCOUNT_JSON: ${{ secrets.TEAM_CDS_SERVICE_ACCOUNT_JSON }}
+          TSP_ML_SID: ${{ secrets.TSP_ML_SID }}
+          TCP_ML_SID: ${{ secrets.TCP_ML_SID }}
+          SHEET_SYNC_SID: ${{ secrets.SHEET_SYNC_SID }}
