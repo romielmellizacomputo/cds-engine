@@ -1,4 +1,4 @@
-name: Additional Scenario Info Fetcher
+name: Additional Scenario Info Runner
 
 on:
   workflow_dispatch:
