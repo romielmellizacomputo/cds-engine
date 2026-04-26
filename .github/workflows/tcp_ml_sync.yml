@@ -1,4 +1,4 @@
-name: TCP ML Sync
+name: Test Case ML Sync
 
 on:
   workflow_dispatch:
