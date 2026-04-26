@@ -1,4 +1,4 @@
-name: Fetch Additional Scenario Info
+name: Scenario Info Fetcher
 on:
   workflow_dispatch:
   schedule:
