@@ -1,4 +1,4 @@
-name: Scenario Info Updater
+name: TSP Additional Info Fetcher
 
 on:
   workflow_dispatch:
