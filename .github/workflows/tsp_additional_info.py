@@ -1,4 +1,4 @@
-name: Additional Scenario Info Updater
+name: Scenario Info Updater
 
 on:
   workflow_dispatch:
